@@ -22,6 +22,7 @@ func main() {
 	https := flag.Bool("https", false, "https")
 	cert := flag.String("cert", "", "cert file")
 	key := flag.String("key", "", "private key file")
+	rpAddr := flag.String("rpAddr", "", "reverse proxy(http only) for plan visite,eg. http://httpbin.org")
 	flag.Parse()
 	if *version {
 		fmt.Printf("GitTag: %s \n", GitTag)
@@ -29,7 +30,7 @@ func main() {
 		os.Exit(0)
 	}
 	defer g.Flush()
-	p := cracker.NewHttpProxy(*addr, *secret, *https)
+	p := cracker.NewHttpProxy(*addr, *secret, *https, *rpAddr)
 	if *https {
 		f, err := os.Stat(*cert)
 		if err != nil {
